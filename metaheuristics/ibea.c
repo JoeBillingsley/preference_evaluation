@@ -48,7 +48,7 @@ void IBEA (population_real* parent_pop, population_real* offspring_pop, populati
         fitcomp[i] = (double *) malloc (2 * popsize * sizeof(double*));
 
     // track the current evolutionary progress, including population and metrics
-    track_evolution (parent_pop, generation, 0);
+    pref_track_evolution (parent_pop, generation);
     while (evaluation_count < max_evaluation)
     {
         generation++;
@@ -64,7 +64,7 @@ void IBEA (population_real* parent_pop, population_real* offspring_pop, populati
         ibea_selection (mixed_pop, parent_pop, flag, fitcomp);
 
         // track the current evolutionary progress, including population and metrics
-        track_evolution (parent_pop, generation, evaluation_count >= max_evaluation);
+        pref_track_evolution (parent_pop, generation);
     }
 
     // release memory

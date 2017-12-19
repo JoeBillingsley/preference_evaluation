@@ -26,6 +26,8 @@
  */
 
 #include "../header/global.h"
+#include "../header/population.h"
+#include "../header/memory.h"
 
 int check_dominance (individual_real *a, individual_real *b)
 {
@@ -168,5 +170,44 @@ list** nondominated_sort_idxs(population_real* pop, int popsize) {
     free(fronts_size);
 
     return fronts;
+}
 
+population_real* get_nondominated(population_real *pop, int popsize, int *new_size) {
+
+    int is_dominated[popsize];
+
+    for(int i = 0; i < popsize; i++)
+        is_dominated[i] = 0;
+
+    int non_dominated_count = popsize;
+
+    for(int i = 0; i < popsize; i++) {
+        if(is_dominated[i]) continue;
+
+        for(int j = 0; j < popsize; j++){
+            if(is_dominated[j]) break;
+
+            int dominates = check_dominance(&pop->ind[i], &pop->ind[j]);
+
+            if(dominates) {
+                is_dominated[j] = 1;
+
+                non_dominated_count--;
+
+                break;
+            }
+        }
+    }
+
+    *new_size = non_dominated_count;
+
+    population_real *processed_pop = malloc(sizeof(population_real) * non_dominated_count);
+    allocate_memory_pop(processed_pop, non_dominated_count);
+
+    int cnt = 0;
+    for(int i = 0; i < popsize; i++)
+        if(!is_dominated[i])
+            copy_ind(&(pop->ind[i]), &(processed_pop->ind[cnt++]));
+
+    return processed_pop;
 }

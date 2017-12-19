@@ -46,4 +46,7 @@ void record_hv (void *ptr, int id);
 double calculate_hv (void *ptr);
 void print_hv (char * file_name);
 
+double calculate_r_mod(population_real *pop, double (*metric)(void *),
+                       const double *reference_point, const double *worst_point, double roi);
+
 # endif // SAMARITAN_INDICATOR_H

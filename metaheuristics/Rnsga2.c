@@ -45,7 +45,7 @@ void RNSGA2 (population_real *parent_pop, population_real *offspring_pop, popula
     evaluate_population (parent_pop);
 
     // track the current evolutionary progress, including population and metrics
-    track_evolution (parent_pop, generation, 0);
+    pref_track_evolution (parent_pop, generation);
     while (evaluation_count < max_evaluation)
     {
         generation++;
@@ -65,7 +65,7 @@ void RNSGA2 (population_real *parent_pop, population_real *offspring_pop, popula
         fill_R_nondominated_sort (parent_pop, mixed_pop, reference_point, weights, epsilon);
 
         // track the current evolutionary progress, including population and metrics
-        track_evolution (parent_pop, generation, evaluation_count >= max_evaluation);
+        pref_track_evolution (parent_pop, generation);
     }
 }
 

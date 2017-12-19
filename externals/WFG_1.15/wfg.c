@@ -139,6 +139,7 @@ void makeDominatedBit(FRONT ps, int p)
 			}
 			if (dominates1way(ps.points[p],ps.points[index],n-2)) {
 				int left = index - prevp[fr][index];
+
 				int right = index + nextp[fr][index];
 				if (left < 0) {
 					firstp[fr] = right;
@@ -147,6 +148,10 @@ void makeDominatedBit(FRONT ps, int p)
 					nextp[fr][left] = right-left;
 				}
 				if (right >= maxm) {
+
+                    if(left < 0) // TODO: Check if this is really a fix
+                        left = 0;
+
 					lastp[fr] = left;
 				}
 				else {
@@ -257,6 +262,7 @@ void makeDominatedBit(FRONT ps, int p)
 		}
 	}
 	int last = lastp[fr];
+
 	nextp[fr][last] = p-last;
 	prevp[fr][p] = p-last;
 	nextp[fr][p] = maxm-p;
@@ -538,6 +544,7 @@ double hv(FRONT ps)
 		psize[fr] = safe;
 		firstp[fr] = 0;
 		lastp[fr] = safe-1;
+
 		nextp[fr][safe-1] = maxm-safe+1;
 		for ( i = safe; i < ps.nPoints; i++) {
 			// we can ditch dominated points here, but they will be ditched anyway in makeDominatedBit 

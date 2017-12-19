@@ -131,7 +131,7 @@ set(SOURCE_FILES
         config.txt
 
         main.c
-        metaheuristics/Rnsga2.c metaheuristics/g-NSGA-II.c metaheuristics/pbea.c metaheuristics/R-MEAD2.c)
+        metaheuristics/Rnsga2.c metaheuristics/gNSGA2.c metaheuristics/pbea.c metaheuristics/R-MEAD2.c indicators/r_metric.c)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(Samaritan ${SOURCE_FILES})
 set(CMAKE_C_FLAGS  ${CMAKE_C_FLAGS} -pthread)

@@ -757,8 +757,13 @@ void r_crowding_fill(population_real *mixed_pop, population_real *new_pop, int c
             c_ind = &(mixed_pop->ind[curr_item->index]);
 
             double sum = 0;
-            for(int i = 0; i < number_objective; i++)
-                sum += fabs(r_ind->obj[i] - c_ind->obj[i]) / (nadir_point[i] - ideal_point[i]);
+            for(int i = 0; i < number_objective; i++) {
+                double diff = nadir_point[i] - ideal_point[i];
+
+                if(diff > 0)
+                    sum += fabs(r_ind->obj[i] - c_ind->obj[i]) / diff;
+
+            }
 
             next_item = curr_item->child;
 

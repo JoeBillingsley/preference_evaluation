@@ -52,7 +52,7 @@ void RMEAD2 (population_real *parent_pop, population_real *offspring_pop, popula
     evaluate_population (parent_pop);
     initialize_idealpoint (parent_pop);
 
-    track_evolution (parent_pop, generation, 0);
+    pref_track_evolution (parent_pop, generation);
 
     while (evaluation_count < max_evaluation)
     {
@@ -96,12 +96,12 @@ void RMEAD2 (population_real *parent_pop, population_real *offspring_pop, popula
 
         generation++;
 
-        track_evolution (parent_pop, generation, evaluation_count >= max_evaluation);
+        pref_track_evolution (parent_pop, generation);
     }
 
     free (ideal_point);
 
-    for (int i = 0; i < number_weight; i++)
+    for (int i = 0; i < popsize; i++)
         free (lambda[i]);
     free (lambda);
 

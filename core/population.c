@@ -36,8 +36,6 @@ void initialize_individual_real (individual_real *ind)
         for (i = 0; i < number_variable; i++)
             ind->xreal[i] = rndreal (variable_lowerbound[i], variable_upperbound[i]);
     ind->cv = 0;    // initialze the CV of each solution to be 0 (assume all solutions are feasible)
-
-    return;
 }
 
 /* Function to initialize a population of individuals */
@@ -47,8 +45,6 @@ void initialize_population_real (population_real *pop)
 
     for (i = 0; i < popsize; i++)
         initialize_individual_real (&(pop->ind[i]));
-
-    return;
 }
 
 /* Function to read static population from external file (Debug use) */

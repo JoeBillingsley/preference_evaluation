@@ -178,3 +178,40 @@ void track_evolution (void *ptr, int id, int end)
         }
     }
 }
+
+void pref_track_evolution (population_real *population, int generation) {
+
+        char output_file[BUFSIZE_L];
+        sprintf(output_file, "%s/pref.out", global_base_dir);
+
+        FILE *fpt;
+
+        if(generation == 1) {
+            fpt = fopen(output_file, "w");
+            fprintf(fpt, "GEN,HV,IGD,R_HV,R_IGD\n");
+        } else
+            fpt = fopen(output_file, "a");
+
+        // Should be the same?
+        double* temp_ref_point = ref_point;
+        ref_point = global_reference_point;
+
+        double hv = calculate_hv(population);
+        double igd = calculate_igd(population);
+
+        ref_point = temp_ref_point;
+
+        double r_hv = calculate_r_mod(population, calculate_hv, global_reference_point, true_nadir, region_of_interest);
+        double r_igd = calculate_r_mod(population, calculate_igd, global_reference_point, true_nadir, region_of_interest);
+
+        fprintf(fpt, "%i,%f,%f,%f,%f\n", generation, hv, igd, r_hv, r_igd);
+
+        fclose (fpt);
+
+    if((generation % 20) == 0) {
+        char population_file[BUFSIZE_L];
+        sprintf(population_file, "%s/pop_%i.out", global_base_dir, generation);
+
+        print_objective(population_file, population);
+    }
+}

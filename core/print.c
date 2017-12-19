@@ -26,6 +26,7 @@
  */
 
 #include "../header/print.h"
+#include "../header/global.h"
 
 /* Output the objective values to file */
 void print_variable (char *file_name, void * ptr)
@@ -58,13 +59,17 @@ void print_objective (char *file_name, void * ptr)
     population_real *pop = (population_real*)ptr;
     for (i = 0; i < popsize; i++)
     {
-        for (j = 0; j < number_objective; j++)
-            fprintf (fpt, "%lf\t", pop->ind[i].obj[j]);
+        for (j = 0; j < number_objective; j++) {
+            if(j < number_objective - 1)
+                fprintf (fpt, "%lf\t", pop->ind[i].obj[j]);
+            else
+                fprintf (fpt, "%lf", pop->ind[i].obj[j]);
+        }
+
         fprintf (fpt, "\n");
     }
-    fclose (fpt);
 
-    return;
+    fclose (fpt);
 }
 
 /* Output the weight vectors used in the decomposition-based methods to file */

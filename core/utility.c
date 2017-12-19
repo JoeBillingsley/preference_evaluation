@@ -175,13 +175,14 @@ double weighted_euclidean_distance_ASF(const double *x, const double* y, const d
     double check_sum = 0;
     for(int i = 0; i < dimension; i++) {
         if(weights[i] > 1 || weights[i] < 0)
-            print_error(1, 3, "Weight  ", i, " exceeded bounds 0 to -1 at weighted_euclidean_distance_ASF");
+            print_error(1, 3, "Weight  ", i, " exceeded bounds 0 to 1 at weighted_euclidean_distance_ASF");
 
         check_sum += weights[i];
     }
 
-    if(check_sum > 1)
-        print_error(1, 1, "Weights exceeded bounds 0 to -1 at weighted_euclidean_distance_ASF");
+    double error = 0.1;
+    if(check_sum > 1 + error)
+        print_error(1, 1, "Weights exceeded bounds 0 to 1 at weighted_euclidean_distance_ASF");
 
     double sum = 0;
     for(int i = 0; i < dimension; i++) {
@@ -198,13 +199,14 @@ double tchebycheff_ASF(const double *x, const double* y, const double* weights, 
     double check_sum = 0;
     for(int i = 0; i < dimensions; i++) {
         if(weights[i] > 1 || weights[i] < 0)
-            print_error(1, 3, "Weight  ", i, " exceeded bounds 0 to -1 at weighted_euclidean_distance_ASF");
+            print_error(1, 3, "Weight  ", i, " exceeded bounds 0 to 1 at weighted_euclidean_distance_ASF");
 
         check_sum += weights[i];
     }
 
-    if(check_sum > 1)
-        print_error(1, 1, "Weights exceeded bounds 0 to -1 at weighted_euclidean_distance_ASF");
+    double error = 0.1;
+    if(check_sum > 1 + error)
+        print_error(1, 1, "Weights exceeded bounds 0 to 1 at weighted_euclidean_distance_ASF");
 
     double curr_diff = 0, max_diff = -INF, diff_sum = 0;
     for(int i = 0; i < dimensions; i++) {

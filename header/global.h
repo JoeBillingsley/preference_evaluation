@@ -51,6 +51,12 @@
 # define BUFSIZE_L 256
 
 /* common paramters */
+
+extern char* global_base_dir;
+extern double* true_nadir;
+extern double* global_reference_point;
+extern double region_of_interest;
+
 extern int run_index;
 extern int run_index_begin;
 extern int run_index_end;

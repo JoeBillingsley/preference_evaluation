@@ -40,7 +40,8 @@
 void NSGA2 (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop);
 void rNSGA2 (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop, double* reference_point, double* weights, double non_dominance_threshold);
 void RNSGA2 (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop, double* reference_point, double* weights, double epsilon);
-void gNSGAII (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop, double* reference_point);
+void gNSGA2(population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop,
+            double *reference_point);
 void RMEAD2 (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop, double* reference_point, double radius);
 void MOEAD (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop);
 void MOEAD_DRA (population_real *parent_pop, population_real *offspring_pop, population_real *mixed_pop);

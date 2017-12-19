@@ -46,7 +46,7 @@ void MOEAD (population_real *pop, population_real *offspring_pop, population_rea
     evaluate_population (pop);
     initialize_idealpoint (pop);
 
-    track_evolution (pop, generation, 0);
+    pref_track_evolution (pop, generation);
 
     permutation = malloc (number_weight * sizeof(int));
     individual_real* offspring = &(offspring_pop->ind[0]);
@@ -73,11 +73,9 @@ void MOEAD (population_real *pop, population_real *offspring_pop, population_rea
         }
         generation++;
 
-        track_evolution (pop, generation, evaluation_count >= max_evaluation);
+        pref_track_evolution (pop, generation);
     }
 
     free (permutation);
     moead_free ();
-
-    return;
 }

@@ -37,4 +37,6 @@ void track_evolution (void *ptr, int id,int end);
 void gnu_plot (char *file, char * title);
 void* py_plot(void *ptr,int gen);
 
+void pref_track_evolution (population_real *population, int generation);
+
 # endif // SAMARITAN_ANALYSE_H
