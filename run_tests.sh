@@ -6,9 +6,9 @@ for run_idx in {0..20}
 do
 	for algo_idx in {0..7}  
 	do
-		for test_idx in {0..7}  
+		for test_idx in {0..1}  
 		do
-			for dim_idx in {3..5}  
+			for dim_idx in {0..5}  
 			do
 				if [ $test_idx -lt 4 ] && [ $dim_idx -gt 0 ]
 				then

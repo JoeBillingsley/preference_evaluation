@@ -245,11 +245,11 @@ int main(int argc, char *argv[])
                 case 0 : NSGA2(parent_pop, offspring_pop, mixed_pop); break;
                 case 1 : MOEAD(parent_pop, offspring_pop, mixed_pop); break;
                 case 2 : IBEA(parent_pop, offspring_pop, mixed_pop); break;
-                case 3 : rNSGA2(parent_pop, offspring_pop, mixed_pop, reference_points[i], weights, non_dominance_threshold); break;
-                case 4 : RNSGA2(parent_pop, offspring_pop, mixed_pop, reference_points[i], weights, epsilon); break;
-                case 5 : gNSGA2(parent_pop, offspring_pop, mixed_pop, reference_points[i]); break;
-                case 6 : RMEAD2(parent_pop, offspring_pop, mixed_pop, reference_points[i], radius); break;
-                case 7 : PBEA(parent_pop, offspring_pop, mixed_pop, reference_points[i], weights, specificity); break;
+                case 3 : rNSGA2(parent_pop, offspring_pop, mixed_pop, global_reference_point, weights, non_dominance_threshold); break;
+                case 4 : RNSGA2(parent_pop, offspring_pop, mixed_pop, global_reference_point, weights, epsilon); break;
+                case 5 : gNSGA2(parent_pop, offspring_pop, mixed_pop, global_reference_point); break;
+                case 6 : RMEAD2(parent_pop, offspring_pop, mixed_pop, global_reference_point, radius); break;
+                case 7 : PBEA(parent_pop, offspring_pop, mixed_pop, global_reference_point, weights, specificity); break;
                 default: exit(-1);
             }
 
