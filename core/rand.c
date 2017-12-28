@@ -42,8 +42,6 @@ void randomize ()
     }
     jrand=0;
     warmup_random (seed);
-
-    return;
 }
 
 /* Get randomize off and running */

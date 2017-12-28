@@ -30,8 +30,6 @@
 
 /* common paramters */
 int run_index;
-int run_index_begin;
-int run_index_end;
 int max_evaluation;              // maximum number of evaluations (stopping criterion)
 int evaluation_count;            // evaluation counter
 int popsize;                     // population size
@@ -41,7 +39,6 @@ double* ideal_point;             // ideal point
 double* nadir_point;             // nadir point
 double* variable_lowerbound;     // variable lower bound
 double* variable_upperbound;     // variable upper bound
-char dummy[BUFSIZE_S];
 char problem_name[BUFSIZE_S];
 char algorithm_name[BUFSIZE_S];
 char analyse_stream[BUFSIZE_L];
@@ -100,8 +97,6 @@ int main(int argc, char *argv[])
     population_real *parent_pop;
     population_real *offspring_pop;
     population_real *mixed_pop;
-
-    randomize ();
 
     double non_dominance_threshold = 0.0001;
     double specificity = 0.02;
@@ -208,6 +203,8 @@ int main(int argc, char *argv[])
 
     initialization_real (argc,argv);
 
+    randomize ();
+
     number_objective = dimensions[dimension_idx];
 
     parent_pop    = (population_real *) malloc (sizeof(population_real));
@@ -226,8 +223,11 @@ int main(int argc, char *argv[])
     for(int i = 0; i < number_objective + 1; i++) {
         for(int j = 0; j < 5; j++) {
 
-            if(algorithm_idx < 3 && (i + j) > 0 )
-                continue;
+//            if(algorithm_idx < 3 && (i + j) > 0 )
+//                continue;
+
+            if(number_objective > 3 && (i % 2 == 0) && i != number_objective)
+                break;
 
             global_reference_point = reference_points[(i * 5) + j];
 
