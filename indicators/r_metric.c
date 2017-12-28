@@ -80,6 +80,7 @@ double calculate_r_mod(population_real *pop, double (*metric)(void *), const dou
 
     double dir_vector[number_objective], shift[number_objective];
     for(int i = 0; i < number_objective; i++) {
+
         double grad = (centroid_ind.obj[k] - reference_point[k]) / (worst_point[k] - reference_point[k]);
         dir_vector[i] = reference_point[i] + grad * (worst_point[i] - reference_point[i]);
 

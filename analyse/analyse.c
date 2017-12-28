@@ -23,11 +23,11 @@
  */
 
 # include "../header/analyse.h"
+#include "../header/global.h"
 
 static double t[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-void track_evolution (void *ptr, int id, int end)
-{
+void track_evolution(void *ptr, int id, int end) {
     int i, j;
     int read_ptr;
 
@@ -38,39 +38,36 @@ void track_evolution (void *ptr, int id, int end)
     char output_dir_level2[BUFSIZE_L];    // lower level directory
     char output_file[BUFSIZE_L];
 
-    sprintf (id_char, "%d", id);
+    sprintf(id_char, "%d", id);
     // set the output directory
-    sprintf (output_dir_level1, "./out/%s_M%d_D%d/%s/",
-             problem_name,
-             number_objective,
-             number_variable,
-             algorithm_name
+    sprintf(output_dir_level1, "./out/%s_M%d_D%d/%s/",
+            problem_name,
+            number_objective,
+            number_variable,
+            algorithm_name
     );
-    sprintf (output_dir_level2, "./out/%s_M%d_D%d/%s/%d/",
-             problem_name,
-             number_objective,
-             number_variable,
-             algorithm_name,
-             run_index
+    sprintf(output_dir_level2, "./out/%s_M%d_D%d/%s/%d/",
+            problem_name,
+            number_objective,
+            number_variable,
+            algorithm_name,
+            run_index
     );
-    _mkdir (output_dir_level2);
+    _mkdir(output_dir_level2);
 
     // first time output, init the parameter and output var and fun
-    if (id == 1)
-    {
+    if (id == 1) {
         // set analyse list
         for (i = 0; i < BUFSIZE_S; i++)
             analyse_list[i] = 0;
 
         read_ptr = 0;
-        while (1)
-        {
+        while (1) {
             int name_c = 0;
             while (analyse_stream[read_ptr] != ' '
                    && analyse_stream[read_ptr] != '\t'
                    && analyse_stream[read_ptr] != '\n'
-                   && analyse_stream[read_ptr] != 0)
-            {
+                   && analyse_stream[read_ptr] != 0) {
                 name[name_c] = analyse_stream[read_ptr];
                 name_c++;
                 read_ptr++;
@@ -91,10 +88,9 @@ void track_evolution (void *ptr, int id, int end)
                 analyse_list[HV] = 1;
             else if (!strcmp(name, "PLOT"))
                 analyse_list[PLOT] = 1;
-            else if (!strcmp(name, "analyse:"))
-                ;
+            else if (!strcmp(name, "analyse:"));
             else
-                print_error(1,2,"unknown setting for analyse ",name);
+                print_error(1, 2, "unknown setting for analyse ", name);
 
             if (analyse_stream[read_ptr] == 0)
                 break;
@@ -102,113 +98,114 @@ void track_evolution (void *ptr, int id, int end)
         }
     }
 
-    if (runtime_output == 1 && (id % output_interval == 0 || id == 1 || end == 1))
-    {
+    if (runtime_output == 1 && (id % output_interval == 0 || id == 1 || end == 1)) {
 
-        if (analyse_list[VAR])
-        {
-            sprintf (output_file, "%smedium_VAR_%s.out", output_dir_level2, id_char);
-            print_variable (output_file, ptr);
+        if (analyse_list[VAR]) {
+            sprintf(output_file, "%smedium_VAR_%s.out", output_dir_level2, id_char);
+            print_variable(output_file, ptr);
         }
-        if (analyse_list[FUN])
-        {
-            sprintf (output_file, "%smedium_FUN_%s.out", output_dir_level2, id_char);
-            print_objective (output_file, ptr);
+        if (analyse_list[FUN]) {
+            sprintf(output_file, "%smedium_FUN_%s.out", output_dir_level2, id_char);
+            print_objective(output_file, ptr);
         }
-        if (analyse_list[GD])
-        {
-            record_gd (ptr, id);
+        if (analyse_list[GD]) {
+            record_gd(ptr, id);
         }
-        if (analyse_list[IGD])
-        {
-            record_igd (ptr, id);
+        if (analyse_list[IGD]) {
+            record_igd(ptr, id);
         }
-        if (analyse_list[HV])
-        {
-            record_hv (ptr,id);
+        if (analyse_list[HV]) {
+            record_hv(ptr, id);
         }
-        if (analyse_list[PLOT])
-        {
-            py_plot(ptr,id);
+        if (analyse_list[PLOT]) {
+            py_plot(ptr, id);
         }
     }
 
-    if (end == 1)
-    {
-        if (analyse_list[VAR])
-        {
-            sprintf (output_file, "%sVAR%d.out", output_dir_level1, run_index);
-            print_variable (output_file, ptr);
+    if (end == 1) {
+        if (analyse_list[VAR]) {
+            sprintf(output_file, "%sVAR%d.out", output_dir_level1, run_index);
+            print_variable(output_file, ptr);
         }
-        if (analyse_list[FUN])
-        {
-            sprintf (output_file, "%sFUN%d.out", output_dir_level1, run_index);
-            print_objective (output_file, ptr);
+        if (analyse_list[FUN]) {
+            sprintf(output_file, "%sFUN%d.out", output_dir_level1, run_index);
+            print_objective(output_file, ptr);
         }
-        if (analyse_list[GD])
-        {
-            if (runtime_output == 1)
-            {
-                sprintf (output_file, "%sGD_%d.txt", output_dir_level2, run_index);
-                print_gd (output_file);
+        if (analyse_list[GD]) {
+            if (runtime_output == 1) {
+                sprintf(output_file, "%sGD_%d.txt", output_dir_level2, run_index);
+                print_gd(output_file);
             }
         }
-        if (analyse_list[IGD])
-        {
-            if (runtime_output == 1)
-            {
-                sprintf (output_file, "%sIGD_%d.txt", output_dir_level2, run_index);
-                print_igd (output_file);
+        if (analyse_list[IGD]) {
+            if (runtime_output == 1) {
+                sprintf(output_file, "%sIGD_%d.txt", output_dir_level2, run_index);
+                print_igd(output_file);
             }
         }
-        if (analyse_list[HV])
-        {
-            if (runtime_output == 1)
-            {
-                sprintf (output_file, "%sHV_%d.txt", output_dir_level2, run_index);
-                print_hv (output_file);
+        if (analyse_list[HV]) {
+            if (runtime_output == 1) {
+                sprintf(output_file, "%sHV_%d.txt", output_dir_level2, run_index);
+                print_hv(output_file);
             }
         }
-        if (analyse_list[PLOT])
-        {
-            py_plot(NULL,0);
+        if (analyse_list[PLOT]) {
+            py_plot(NULL, 0);
             // for gnuplot
-            sprintf (output_file, "%sFUN%d.out", output_dir_level1, run_index);
+            sprintf(output_file, "%sFUN%d.out", output_dir_level1, run_index);
             gnu_plot(output_file, "FUN");
         }
     }
 }
 
-void pref_track_evolution (population_real *population, int generation) {
+void pref_track_evolution(population_real *population, int generation) {
 
-        char output_file[BUFSIZE_L];
-        sprintf(output_file, "%s/pref.out", global_base_dir);
+    char output_file[BUFSIZE_L];
+    sprintf(output_file, "%s/pref.out", global_base_dir);
 
-        FILE *fpt;
+    FILE *fpt;
 
-        if(generation == 1) {
-            fpt = fopen(output_file, "w");
-            fprintf(fpt, "GEN,HV,IGD,R_HV,R_IGD\n");
-        } else
-            fpt = fopen(output_file, "a");
+    if (generation == 1) {
+        fpt = fopen(output_file, "w");
+        fprintf(fpt, "GEN,HV,IGD,R_HV,R_IGD,MIN_DIST,AVG_DIST\n");
+    } else
+        fpt = fopen(output_file, "a");
 
-        // Should be the same?
-        double* temp_ref_point = ref_point;
-        ref_point = global_reference_point;
+    // Should be the same?
+    double *temp_ref_point = ref_point;
+    ref_point = global_reference_point;
 
-        double hv = calculate_hv(population);
-        double igd = calculate_igd(population);
+    double hv = calculate_hv(population);
+    double igd = calculate_igd(population);
 
-        ref_point = temp_ref_point;
+    ref_point = temp_ref_point;
 
-        double r_hv = calculate_r_mod(population, calculate_hv, global_reference_point, true_nadir, region_of_interest);
-        double r_igd = calculate_r_mod(population, calculate_igd, global_reference_point, true_nadir, region_of_interest);
+    double worst_point[number_objective];
+    for(int i = 0; i < number_objective; i++)
+        worst_point[i] = true_nadir[i] * 2;
 
-        fprintf(fpt, "%i,%f,%f,%f,%f\n", generation, hv, igd, r_hv, r_igd);
+    double r_hv = calculate_r_mod(population, calculate_hv, global_reference_point, worst_point, region_of_interest);
+    double r_igd = calculate_r_mod(population, calculate_igd, global_reference_point, worst_point, region_of_interest);
 
-        fclose (fpt);
+    double min_dist = INF;
+    double avg_dist = 0;
 
-    if((generation % 20) == 0) {
+    for(int i = 0; i < popsize; i++) {
+        double dist = euclidian_distance(population->ind[i].obj, global_reference_point, number_objective);
+
+        if(dist < min_dist)
+            min_dist = dist;
+
+        avg_dist += min_dist;
+    }
+
+    avg_dist = avg_dist / popsize;
+
+    fprintf(fpt, "%i,%f,%f,%f,%f,%f,%f\n", generation, hv, igd, r_hv, r_igd, min_dist, avg_dist);
+
+    fclose(fpt);
+
+    if ((generation % 20) == 0) {
         char population_file[BUFSIZE_L];
         sprintf(population_file, "%s/pop_%i.out", global_base_dir, generation);
 
