@@ -30,7 +30,12 @@
 population_real* restrict_to_range(population_real *pop, int popsize, double *centroid, double range, int *new_size);
 
 double calculate_r_mod(population_real *pop, double (*metric)(void *), const double *reference_point,
-                       const double *worst_point, double roi) {
+                       const double *weights, double roi) {
+
+    double worst_point[number_objective];
+
+    for(int i = 0; i < number_objective; i++)
+        worst_point[i] = reference_point[i] + (2.0 * weights[i]);
 
     // Process population to remove dominated solutions
     int new_size = 0;

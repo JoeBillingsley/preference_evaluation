@@ -23,12 +23,11 @@
  */
 
 # include "../header/analyse.h"
-#include "../header/global.h"
 
 static double t[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 void track_evolution(void *ptr, int id, int end) {
-    int i, j;
+    int i;
     int read_ptr;
 
     char name[20];
@@ -180,12 +179,12 @@ void pref_track_evolution(population_real *population, int generation) {
 
     ref_point = temp_ref_point;
 
-    double worst_point[number_objective];
+    double weights[number_objective];
     for(int i = 0; i < number_objective; i++)
-        worst_point[i] = true_nadir[i] * 2;
+        weights[i] = 1 / ((double) number_objective);
 
-    double r_hv = calculate_r_mod(population, calculate_hv, global_reference_point, worst_point, region_of_interest);
-    double r_igd = calculate_r_mod(population, calculate_igd, global_reference_point, worst_point, region_of_interest);
+    double r_hv = calculate_r_mod(population, calculate_hv, global_reference_point, weights, region_of_interest);
+    double r_igd = calculate_r_mod(population, calculate_igd, global_reference_point, weights, region_of_interest);
 
     double min_dist = INF;
     double avg_dist = 0;
